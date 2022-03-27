@@ -146,7 +146,6 @@ def read_package(workout_type: str, data: list) -> Training:
         return pam_train[workout_type](*data)
 
 
-
 def main(training: Training) -> None:
     """Главная функция."""
     message_trainig = training.show_training_info()
