@@ -149,7 +149,8 @@ def read_package(workout_type: str, data: List) -> Training:
     if workout_type in pam_train:
         return pam_train[workout_type](*data)
 # ваша ссылка не открылась, но гугл помог
-    raise ValueError('{work_type} не найден, выберите правильный тип тренировки')
+    raise ValueError(f'{workout_type} не найден,'
+                     f'выберите правильный тип тренировки')
 
 
 def main(training: Training) -> None:
