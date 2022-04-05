@@ -1,6 +1,12 @@
-
-
+from typing import Type, Dict, List
 from dataclasses import dataclass, asdict
+
+
+# Если другому человеку понадобится доступ,
+# то не нужно будет лезть далеко в код
+SWM = 'SWM'
+RUN = 'RUN'
+WLK = 'WLK'
 
 
 @dataclass
@@ -110,8 +116,8 @@ class Swimming(Training):
     """Тренировка: плавание."""
 
     LEN_STEP = 1.38
-    swim_calorie_1 = 1.1
-    swim_calorie_2 = 2
+    SWM_CAL_1 = 1.1
+    SWM_CAL_2 = 2
 
     def __init__(self,
                  action: float,
@@ -128,22 +134,22 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.get_mean_speed()
-                + self.swim_calorie_1)
-                * self.swim_calorie_2
+                + self.SWM_CAL_1)
+                * self.SWM_CAL_2
                 * self.weight)
 
 
-def read_package(workout_type: str, data: list) -> Training:
+def read_package(workout_type: str, data: List) -> Training:
     """Прочитать данные полученные от датчиков."""
 
-    pam_train: dict[str, type[Training]] = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking}
+    pam_train: Dict[str, Type[Training]] = {
+        SWM: Swimming,
+        RUN: Running,
+        WLK: SportsWalking}
     if workout_type in pam_train:
         return pam_train[workout_type](*data)
-    else:
-        raise ValueError('Неверный тип тренировки')
+# ваша ссылка не открылась, но гугл помог
+    raise ValueError('Неверный тип тренировки')
 
 
 def main(training: Training) -> None:
@@ -156,9 +162,9 @@ def main(training: Training) -> None:
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),
-        ('RUN', [15000, 1, 75]),
-        ('WLK', [9000, 1, 75, 180]),
+        (SWM, [720, 1, 80, 25, 40]),
+        (RUN, [15000, 1, 75]),
+        (WLK, [9000, 1, 75, 180]),
     ]
 
     for workout_type, data in packages:
